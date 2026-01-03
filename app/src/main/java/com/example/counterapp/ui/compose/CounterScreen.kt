@@ -1,5 +1,11 @@
 package com.example.counterapp.ui.compose
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,7 +13,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,17 +45,28 @@ fun CounterScreen(
 
         Text(
             text = stringResource(R.string.app_name),
-            fontSize = 32.sp,
+            fontSize = 32.sp
         )
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Text(
-            text = count.toString(),
-            fontSize = 48.sp,
-            modifier = Modifier.padding(bottom = 12.dp)
+        AnimatedContent(
+            targetState = count,
+            transitionSpec = {
+                slideInVertically { it } + fadeIn() togetherWith
+                        slideOutVertically { -it } + fadeOut()
+            },
+            label = "CounterAnimation"
+        ) {
+            value ->
+            Text(
+                text = value.toString(),
+                fontSize = 48.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+        }
 
-        )
+
 
         Row(
             modifier = Modifier.padding(bottom = 12.dp),
@@ -55,17 +74,24 @@ fun CounterScreen(
 
         ) {
             Button(
-                onClick = { viewModel.increment() }
+                onClick = { viewModel.decrement() },
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                Text(text = stringResource(R.string.decrement))
+            }
+
+            Button(
+                onClick = { viewModel.increment() },
+                shape = RoundedCornerShape(10.dp)
             ) {
                 Text(text = stringResource(R.string.increment))
             }
-
-            Button(onClick = { viewModel.decrement() }) {
-                Text(text = stringResource(R.string.decrement))
-            }
         }
 
-        Button(onClick = { viewModel.reset() }) {
+        OutlinedButton(
+            onClick = { viewModel.reset() },
+            shape = RoundedCornerShape(10.dp)
+        ) {
             Text(text = stringResource(R.string.reset))
         }
     }
