@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,9 +64,9 @@ fun CounterScreen(
                 text = value.toString(),
                 fontSize = 48.sp,
                 modifier = Modifier.padding(bottom = 12.dp)
+                    .testTag("countText")
             )
         }
-
 
 
         Row(
@@ -75,14 +76,16 @@ fun CounterScreen(
         ) {
             Button(
                 onClick = { viewModel.decrement() },
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.testTag("decrementButton")
             ) {
                 Text(text = stringResource(R.string.decrement))
             }
 
             Button(
                 onClick = { viewModel.increment() },
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.testTag("incrementButton")
             ) {
                 Text(text = stringResource(R.string.increment))
             }
@@ -90,7 +93,8 @@ fun CounterScreen(
 
         OutlinedButton(
             onClick = { viewModel.reset() },
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier.testTag("resetButton")
         ) {
             Text(text = stringResource(R.string.reset))
         }
