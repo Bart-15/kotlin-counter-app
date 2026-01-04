@@ -62,4 +62,8 @@ dependencies {
     // ViewModel Compose
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.ktx)
+
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4.v152)
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
+    debugImplementation(libs.androidx.compose.ui.test.manifest.v152)
 }
