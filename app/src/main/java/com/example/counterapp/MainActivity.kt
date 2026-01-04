@@ -17,7 +17,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CounterAppTheme {
-
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CounterScreen(
                         modifier = Modifier.padding(innerPadding)
